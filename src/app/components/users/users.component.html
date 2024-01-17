@@ -1,0 +1,49 @@
+<section class="users-component w-full">
+  <h1 class="uppercase text-3xl font-bold">Users</h1>
+
+  <div class="flex flex-col gap-10">
+    <!-- CREATE -->
+    <section class="create flex gap-4 items-end content-end">
+      <label class="flex flex-col">
+        Name
+        <input
+          [(ngModel)]="newUser.name"
+          class="border border-black"
+          type="text"
+          name="name" />
+      </label>
+      <label class="flex flex-col">
+        Age
+        <input
+          [(ngModel)]="newUser.age"
+          class="border border-black"
+          type="number"
+          name="age" />
+      </label>
+      <button class="bg-slate-300 p-2" (click)="create()">Create</button>
+    </section>
+
+    <!-- LIST -->
+
+    <section class="list">
+      <button class="mb-2 border-b-2 border-blue-500" (click)="loadUsers()">
+        Refresh
+      </button>
+      <ul class="flex flex-col gap-2" *ngIf="users$ | async as users">
+        <li class="uppercase font-bold">User List</li>
+        @for (user of users; track $index) {
+        <li>
+          <span class="mr-2">- {{ user.name }}, {{ user.age }}</span>
+          @if(user.id) {
+          <button class="p-1 bg-rose-500" (click)="deleteUser(user.id)">
+            Delete
+          </button>
+          }
+        </li>
+        } @empty {
+        <li class="text-gray-400">No users</li>
+        }
+      </ul>
+    </section>
+  </div>
+</section>

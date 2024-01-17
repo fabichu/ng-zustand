@@ -1,0 +1,13 @@
+{
+  "name": "ng-zustand",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^17.0.0",
+    "@angular/core": "^17.0.0",
+    "zustand": ">=4.4.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
