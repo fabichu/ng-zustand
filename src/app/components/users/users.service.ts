@@ -7,7 +7,6 @@ interface UsersState {
   users: IUser[];
   loadUsers: () => void;
   createUser: (user: IUser) => void;
-  deleteUser: (id: string) => void;
   success: boolean;
 }
 
@@ -36,18 +35,19 @@ export class UsersService extends ZustandBaseService<UsersState> {
           },
           error: () => set({ success: false })
         });
-      },
-      deleteUser: (id) => {
-        this.http
-          .delete<boolean>(`http://localhost:3000/users/${id}`)
-          .subscribe({
-            next: (response) => {
-              set({ success: response });
-              get().loadUsers();
-            },
-            error: () => set({ success: false })
-          });
       }
+    });
+  }
+
+  // También se pueden crear las acciones como métodos del servicio
+  // en vez de meterlos en el propio estado
+  deleteUser(id: string) {
+    this.http.delete<boolean>(`http://localhost:3000/users/${id}`).subscribe({
+      next: (response) => {
+        this.setState({ success: response });
+        this.getState().loadUsers();
+      },
+      error: () => this.setState({ success: false })
     });
   }
 }

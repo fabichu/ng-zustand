@@ -16,14 +16,13 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent implements OnInit {
-  usersService = inject(UsersService);
+  private usersService = inject(UsersService);
 
   users$ = this.usersService.useStore((state) => state.users);
   success$ = this.usersService.useStore((state) => state.success);
 
   loadUsers = this.usersService.getState().loadUsers;
   createUser = this.usersService.getState().createUser;
-  deleteUser = this.usersService.getState().deleteUser;
 
   newUser: IUser = {
     name: '',
@@ -38,5 +37,9 @@ export class UsersComponent implements OnInit {
     if (this.newUser.name.length && this.newUser.age) {
       this.createUser(this.newUser);
     }
+  }
+
+  deleteUser(id: string) {
+    this.usersService.deleteUser(id);
   }
 }
